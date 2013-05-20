@@ -1,0 +1,60 @@
+Knows Bugs (upgrade information):
+
+Fixed:
+
++++ (Req.) Implement two list of dead: dead; attempted. +++
++++ We should have two lists of dead persons. +++ Done
++++ Real dead + Property Dead+++
++++Half dead + Property Attempted+++
++++Dead on the beginning of the night+++
++++Dead on the end of the night+++
++++ (Bug) WhiteLighter didn't heal attempted person  +++ Fixed. Now whitelighter heals attempted person
++++ (Bug) WhiteLighter has in List all users. Should have only alive users before night. +++  Now whitelighter has only alive users before night in his list
++++ (Bug) WhiteLighter heals dead person. Shouldn't. Only avators can ressurect from dead. +++ Couldn't reproduce
++++ (Req.) Implement Objectives form.+++
++++ (Req.) Show current User's role +++
++++ (Req.) objectives form -> 900 to right +++
++++ (Req.) CheatForm: add scrollbars +++
++++ (Req.) Form2 -> 50 to right -10 to top +++
++++ (Req.) Form2 -> 50 to right  +++
++++ (Req.)          -30 -5 +++
++++ (Bug) NarcoDiller has in List all users. Should have only alive users before night.+++ Fixed
++++ (Bug) Number of alive persons is not calculated properly. ? yes (cannot reproduce) +++
+(Info) ? Whom can heal doctor, whitelighter, advocat?
+WL:   if not Sender.FHanged and not Sender.FDiedForSpell and not Sender.FDiedForPoison then
+WL can heal any person attempted in the night except Demon and Avatar.
+Doctor can heal any person attempted in the night by Mafia or Maniac or anyone who just shooted victim
+(this is not included Imprisoning; Demonic kill, day hang kill, demon death from witch poison-spell or avatar death from avatar poison or morokun spoiled arrows
+Advocat can defend mafia or maniac in court and prevent them from death execution
++++ (Req.) Demon couldn't make zombies from dead people +++ new feature implemented
++++ ? (Bug) Why morokun "imprisons" victims?+++ Fixed
++++ (Req.) Show current User's objectives:  +++ Implemented
++++  -  fulfied +++ Fixed
++++ -  unfulfied +++ Fixed
++++ Show friends (allies) +++ Fixed
++++ (Req.)Show known enemies +++ Fixed
++++ (Req.)Show unknown enemies  + for witch +++ Fixed
++++ (Req.) Game is not balanced.
+Impossible to win playing for narcodiller. Dies to fast. --- Fixed
+To add 1 day for each new narco --- Fixed
+To add 2 days for each new narco-avatar --- Fixed
+if someones kills narco (except antinarcocop), becomes narco --- Fixed (every even ancop become narco)
++++ (Bug) Morokun usual arrows don't kill/Actually Morokun throw morokun arrows but it is written that he is just shooting+++ Fixed
+(Req.) Implement All avatars can do smth in the night --- Implemented.
+(Bug)  Error on second call of Avatar JoinUs --- can't reproduce
+(Info) Can WL heal narcomans? --- Currently no.
+(Req.) Primary goals succeeded. Can I continue game and try to succeed other goals? --- Now yes. Implemented.
+
+Pending:
+
+
+Req.
+(Req.)Implement DelZombie
+(Req.)Implement NickNames for all players
+(Req.)Implement Rewind Event back
+(Req.)Implement Change Event in the past
+
+(Bug) If we resurrect dead avatar we should increment count of alive avatars
+(Bug) if someone leaves avatars, should lose avatar privileges
+
+
