@@ -1,0 +1,36 @@
+  if Assigned(Avatars[i]) and Avatars[i].Alive then
+      if not Avatars[i].Freezed then begin
+        if Avatars[i].UserControlled then
+          UserAvator.Showmodal
+        else begin
+          UserAvator.renew;
+          if (Player.AvatarNumber > 1) and (Random(2) = 1) then
+          begin
+            UserAvator.Button2Click(Nil);
+          end else
+          begin
+        case CountOfAliveAvatars of
+          1: UserAvator.ac.ItemIndex := 0; //JoinUs
+          2..9:
+            if CountOfAliveAvatars = CountOfAlivePlayers then
+              UserAvator.ac.ItemIndex := 4 // Utopy
+            else
+              UserAvator.ac.ItemIndex := 0;
+          10:
+            if not Utopy then
+              UserAvator.ac.ItemIndex := 4
+            else
+              UserAvator.ac.ItemIndex := 5 // Clear
+        end;
+        UserAvator.AP.ItemIndex := FirstNotAvatarPersonIndex - 1;
+        UserAvator.Button1Click(Nil);
+        end
+      end else begin
+        MSG.Memo1.Lines.Add(Player.AvatarName + ' couldn''t do her functions because was freezed by witch');
+        EventList.AddMoveMiss(Player.AvatarName, 'WitchSpell', NString + ' couldn''t do her functions because was freezed by witch')
+      end
+    else begin
+      MSG.Memo1.Lines.Add(Player.AvatarName + ' is banquished');
+      EventList.AddMoveMiss(Player.AvatarName, 'Dead', NString + ' is banquished')
+    end;
+  end;

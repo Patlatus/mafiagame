@@ -1,0 +1,37 @@
+[User|TNarcoman->Player4|TMorokun]{Accusation;is a morokun!}User claims: Player4 - is a morokun!
+[Player3|TRedMafia1->Player7|TRedMafia2]{Accusation;is a DEMON!!!!}Player3 claims: Player7 - is a DEMON!!!!
+[Player5|TDemon->User|TNarcoman]{Accusation;is drugs-controlled!}Player5 claims: User - is drugs-controlled!
+[User|TNarcoman->Player4|TMorokun]{Vote;is drugs-controlled!}User votes for Player4
+[Player2|TBlackMafia1->Player7|TRedMafia2]{Vote;is drugs-controlled!}User votes for Player7
+[Player3|TRedMafia1->Player4|TMorokun]{Vote;is drugs-controlled!}User votes for Player4
+[Player4|TMorokun->Player7|TRedMafia2]{Vote;is drugs-controlled!}User votes for Player7
+[Player5|TDemon->User|TNarcoman]{Vote;is drugs-controlled!}User votes for User
+[Player6|TRedMafia3->User|TNarcoman]{Vote;is drugs-controlled!}User votes for User
+[Player7|TRedMafia2->Player7|TRedMafia2]{Vote;is drugs-controlled!}User votes for Player7
+[Player8|TWitch->User|TNarcoman]{Vote;is drugs-controlled!}User votes for User
+[Player9|TAdvocat->Player4|TMorokun]{Vote;is drugs-controlled!}User votes for Player4
+[Player10|TBlackMafia2->User|TNarcoman]{Vote;is drugs-controlled!}User votes for User
+[Player11|TDoctor->Player7|TRedMafia2]{Vote;is drugs-controlled!}User votes for Player7
+[Player12|TAntiNarcoCop->User|TNarcoman]{Vote;is drugs-controlled!}User votes for User
+[Player13|TAgentFBI->Player7|TRedMafia2]{Vote;is drugs-controlled!}User votes for Player7
+[Player14|TPolice->Player4|TMorokun]{Vote;is drugs-controlled!}User votes for Player4
+[Player15|TWhiteLighter->User|TNarcoman]{Vote;is drugs-controlled!}User votes for User
+[Player16|TBlackMafia3->User|TNarcoman]{Vote;is drugs-controlled!}User votes for User
+[Player17|TRedManiac->Player4|TMorokun]{Vote;is drugs-controlled!}User votes for Player4
+[Player18|TAvatar->User|TNarcoman]{Vote;is drugs-controlled!}User votes for User
+[Player19|TBlackManiac->Player7|TRedMafia2]{Vote;is drugs-controlled!}User votes for Player7
+[*Null*->User|TNarcoman]{Hanging;hanged}User was hanged. User is user controlled, has drugs,  has 5 days left, hanged, dead, drugs adicted,  her classtype is TNarcoman
+[Player8|TWitch->Player15|TWhiteLighter]{WitchSpell;Spell of the TRUTH}Witch used a power Spell of the TRUTH
+[Player2|TBlackMafia1->Player14|TPolice]{MurderTry;Just to shoot}TBlackMafia has made her dark duty Just to shoot
+[Player3|TRedMafia1->*Null*]{Move miss;Decision}TRedMafia decided to take a rest and leave people alone
+[Player19|TBlackManiac->Player12|TAntiNarcoCop]{MurderTry;Just to shoot}TBlackManiac has made her dark duty Just to shoot
+[Player17|TRedManiac->Player2|TBlackMafia1]{MurderTry;Using a string}TRedManiac has made her dark duty Using a string
+[Player14|TPolice->Player10|TBlackMafia2]{MurderTry;Just to shoot}TPolice has made her holy dark duty Just to shoot
+[Player13|TAgentFBI->Player18|TAvatar]{MurderTry;imprison}TAgentFBI tried to kill somebody but didn't succeed because VICTIM was DEATHIMMUNE
+[Player5|TDemon->*Null*]{Move miss;Decision}TDemon decided to take a rest
+[Player4|TMorokun->Player11|TDoctor]{MurderTry;Just to shoot}TMorokun didn't succeed because victim wasn't whitelighter
+[Player12|TAntiNarcoCop->Player12|TAntiNarcoCop]{MurderTry;heal}ANCop tries to heal from drugs not drugs-adicted person
+[*Null*->*Null*]{Move miss;Decision}TDoctor decided to take a rest
+[*Null*->*Null*]{Move miss;Decision}TAdvocat decided to take a rest
+[*Null*->*Null*]{Move miss;Decision}TWhiteLighter decided to take a rest
+[*Null*->Player2|TBlackMafia1]{MurderTry;JoinUs}Somebody joins avators
