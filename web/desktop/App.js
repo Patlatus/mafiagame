@@ -14,9 +14,11 @@ Ext.define('MyDesktop.App', {
         'MyDesktop.SimpleReader',
         'MyDesktop.RegistrationForm',
         'MyDesktop.LoginForm',
-        'MyDesktop.Settings'],
+        'MyDesktop.Settings',
+        'MyDesktop.WebMafiaWindow'],
     getModules : function(){
         return [
+            new MyDesktop.WebMafiaWindow(),
             new MyDesktop.Notepad()
         ];
     },
@@ -31,7 +33,10 @@ Ext.define('MyDesktop.App', {
             }],
             shortcuts: Ext.create('Ext.data.Store', {
                 model:'Ext.ux.desktop.ShortcutModel',
-                data: []
+                data: [{ name:'Web Mafia Game',
+                    iconCls:'mafia-shortcut',
+                    module:'mafia-win' 
+                }]
             }),
             wallpaper: 'wallpapers/isus-wallpaper.jpg',
             wallpaperStretch:false
@@ -68,6 +73,10 @@ Ext.define('MyDesktop.App', {
         var ret = this.callParent();
         return Ext.apply(ret, {
             quickStart: [{
+                name:'Web Mafia Game',
+                iconCls:'icon-mafia',
+                module:'mafia-win'
+            }, {
                 name:window.addnote || 'Додати запис',
                 iconCls:'notepad',
                 module:'notepad'
@@ -211,18 +220,7 @@ Ext.define('MyDesktop.App', {
         this.callParent(arguments);
         Ext.Msg.buttonText.yes = window.yes || 'Так';
         Ext.Msg.buttonText.no = window.no || 'Ні';
-        
-        this.loadStickers('gn.php', window.userid, 0, 50, 'background-color:yellow;', {
-            showDuplicateButton : false,
-            showEditButton      : true,
-            showRemoveButton    : true
-        });
-        
-        this.loadStickers('gn.php', 'default', 200, 100, 'background-color:00ff00;', {
-            showDuplicateButton : true,
-            showEditButton      : false,
-            showRemoveButton    : false
-        });
+        this.getModules()[0].createWindow().show();
     },
     
     loadStickers : function (url, hashtag, defX, defYShift, bodyStyle, options) {
