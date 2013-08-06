@@ -1,0 +1,5 @@
+mafiabaselinechat (all people)
+
+mafiachat
+
+external key: game id; team id
