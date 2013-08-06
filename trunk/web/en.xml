@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+<alertmessage1>Error during decoding text:</alertmessage1>
+<successtitle>Success</successtitle>
+<failedtitle>Failure</failedtitle>
+<regformtitle>Registration Form</regformtitle>
+<usernamelabel>Username</usernamelabel>
+<passwordlabel>Password</passwordlabel>
+<passverlabel>Password(verification)</passverlabel>
+<emaillabel>Email Address</emaillabel>
+<backlabel>Back</backlabel>
+<resetlabel>Reset</resetlabel>
+<signuplabel>Sign Up</signuplabel>
+<logoutlabel>Logout</logoutlabel>
+<logformtitle>Login Form</logformtitle>
+<reglabel>Register</reglabel>
+<alertmessage2>Take your head up</alertmessage2>
+<loglabel>Login</loglabel>
+<languagelabel>Language</languagelabel>
+<successfulloginmessage>You have successfully been logged</successfulloginmessage>
+<wronguserorpasswordmessage>The username or password you entered are not good.</wronguserorpasswordmessage>
+<successfulsignupmessage>You have successfully been signed up. You can now log in.</successfulsignupmessage>
+<dbsignuperror>An error occurred while signing you up.</dbsignuperror>
+<emailalreadyused>Another user already use this email.</emailalreadyused>
+<usernamealreadyused>Another user already use this username.</usernamealreadyused>
+<invalidemail>The email you typed is not valid.</invalidemail>
+<passwordsarenotidentical>The passwords you entered are not identical.</passwordsarenotidentical>
+<settings>Settings</settings>
+<changesettings>Change settings</changesettings>
+<addnote>Add note</addnote>
+<addnewnote>Add new note</addnewnote>
+<editnote>Edit note</editnote>
+<applychanges>Apply changes</applychanges>
+<titletext>Title</titletext>
+<removenotetitle>Hello!</removenotetitle>
+<removenotetext>Do you really want to remove this cute and wonderful note? You will not be able to cancel this action.</removenotetext>
+<duplicate>Duplicate</duplicate>
+<edit>Edit</edit>
+<remove>Remove</remove>
+<yes>Yes</yes>
+<no>No</no>
+<start>Start</start>
+</root>
