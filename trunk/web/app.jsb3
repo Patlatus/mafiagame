@@ -1045,6 +1045,11 @@
                     "path": "desktop/"
                 },
                 {
+                    "clsName": "MyDesktop.WebMafiaWindow",
+                    "name": "WebMafiaWindow.js",
+                    "path": "desktop/"
+                },
+                {
                     "clsName": "MyDesktop.App",
                     "name": "App.js",
                     "path": "desktop/"

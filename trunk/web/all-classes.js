@@ -83574,10 +83574,10 @@ Ext.define('MyDesktop.SimpleReader', {
     read : function (xhr) {
         var result = Ext.decode(xhr.responseText);
         window.userLogged = result.success;
+        window.resultMessage = result.message;
         if (result.success) {
             window.username = result.username;
             window.userid = result.userid;
-            window.resultMessage = result.message;
         }
         return {
             success : result.success,
@@ -83819,6 +83819,67 @@ Ext.define('MyDesktop.LoginForm', {
         myDesktopApp.updateUserLanguage();
     }
 });
+Ext.define('MyDesktop.WebMafiaWindow', {
+    extend: 'Ext.ux.desktop.Module',
+    
+    requires: [
+    ],
+    
+    id    : 'mafia-win',
+    title : 'Mafia game',
+    icon  : 'icon-mafia',
+
+    
+    init : function() {
+        this.launcher = {
+            text : this.title,
+            iconCls : this.icon
+        };
+        //custom logic
+    },
+    
+    createWindow : function() {
+        var t       = this,
+            desktop = myDesktopApp.getDesktop();
+            win     = desktop.getWindow(t.id);
+        if (!win) {
+            win = desktop.createWindow({
+                id : t.id,
+                title : t.title,
+                width : 425,
+                maximized : true,
+                minWidth : 330,
+                height : 330,
+                minHeight : 330,
+                iconCls : t.icon,
+                animCollapse : false,
+                constrainHeader : true,
+                layout : {
+                    type : 'hbox',
+                    align : 'stretch'
+                },
+                items:[{
+                    title : 'Web Mafia baseline chat',
+                    bodyCls : 'x-window-body-default',
+                    flex : 2,
+                    html : 'first panel'
+                }, {
+                    title : 'Online users',
+                    bodyCls : 'x-window-body-default',
+                    flex : 1, 
+                    html :'second panel'
+                }, {
+                    title : 'Games',
+                    bodyCls : 'x-window-body-default',
+                    flex : 3,
+                    html :'third panel'
+                }]//custom items
+            });
+            //custom after window create logic
+        }
+        return win;
+    }
+});
 Ext.define('MyDesktop.App', {
     extend: 'Ext.ux.desktop.App',
     requires: 
@@ -83835,9 +83896,11 @@ Ext.define('MyDesktop.App', {
         'MyDesktop.SimpleReader',
         'MyDesktop.RegistrationForm',
         'MyDesktop.LoginForm',
-        'MyDesktop.Settings'],
+        'MyDesktop.Settings',
+        'MyDesktop.WebMafiaWindow'],
     getModules : function(){
         return [
+            new MyDesktop.WebMafiaWindow(),
             new MyDesktop.Notepad()
         ];
     },
@@ -83852,7 +83915,10 @@ Ext.define('MyDesktop.App', {
             }],
             shortcuts: Ext.create('Ext.data.Store', {
                 model:'Ext.ux.desktop.ShortcutModel',
-                data: []
+                data: [{ name:'Web Mafia Game',
+                    iconCls:'mafia-shortcut',
+                    module:'mafia-win' 
+                }]
             }),
             wallpaper: 'wallpapers/isus-wallpaper.jpg',
             wallpaperStretch:false
@@ -83889,6 +83955,10 @@ Ext.define('MyDesktop.App', {
         var ret = this.callParent();
         return Ext.apply(ret, {
             quickStart: [{
+                name:'Web Mafia Game',
+                iconCls:'icon-mafia',
+                module:'mafia-win'
+            }, {
                 name:window.addnote || 'Додати запис',
                 iconCls:'notepad',
                 module:'notepad'
@@ -84032,18 +84102,7 @@ Ext.define('MyDesktop.App', {
         this.callParent(arguments);
         Ext.Msg.buttonText.yes = window.yes || 'Так';
         Ext.Msg.buttonText.no = window.no || 'Ні';
-        
-        this.loadStickers('gn.php', window.userid, 0, 50, 'background-color:yellow;', {
-            showDuplicateButton : false,
-            showEditButton      : true,
-            showRemoveButton    : true
-        });
-        
-        this.loadStickers('gn.php', 'default', 200, 100, 'background-color:00ff00;', {
-            showDuplicateButton : true,
-            showEditButton      : false,
-            showRemoveButton    : false
-        });
+        this.getModules()[0].createWindow().show();
     },
     
     loadStickers : function (url, hashtag, defX, defYShift, bodyStyle, options) {

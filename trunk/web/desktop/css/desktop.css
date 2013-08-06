@@ -180,8 +180,8 @@
     background-image: url(../images/statusLarge.png);
 }
 
-.matches-shortcut {
-    background-image: url(../images/matches.gif);
+.mafia-shortcut {
+    background-image: url(../images/mafia.png);
 }
 
 .notepad-shortcut {
@@ -236,8 +236,8 @@
 .icon-abouttext{
     background-image:url( ../images/about.png ) !important;
 }
-.icon-matches{
-    background-image:url( ../images/m.gif ) !important;
+.icon-mafia{
+    background-image:url( ../images/maf.png ) !important;
 }
 .icon-grid {
     background-image:url( ../images/grid.png ) !important;
