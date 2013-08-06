@@ -37,25 +37,110 @@ Ext.define('MyDesktop.WebMafiaWindow', {
                     type : 'hbox',
                     align : 'stretch'
                 },
-                items:[{
+                items : [{
                     title : 'Web Mafia baseline chat',
                     bodyCls : 'x-window-body-default',
                     flex : 2,
-                    html : 'first panel'
+                    layout : {
+                        type : 'vbox',
+                        align : 'stretch'
+                    },
+                    items : [{
+                        flex : 1,
+                        id : 'chatlines',
+                        bodyCls : 'x-window-body-default',
+                        html : 'Chat lines'
+                    }, {
+                        bodyCls : 'x-window-body-default',
+                        layout : {
+                            type : 'hbox',
+                            align : 'stretch'
+                        },
+                        items : [{
+                            flex : 1,
+                            xtype : 'textfield'
+                        }, {
+                            xtype : 'button',
+                            text : 'Say'
+                        }]
+                    }]
                 }, {
                     title : 'Online users',
                     bodyCls : 'x-window-body-default',
+                    id : 'usersonline',
                     flex : 1, 
                     html :'second panel'
                 }, {
                     title : 'Games',
                     bodyCls : 'x-window-body-default',
                     flex : 3,
-                    html :'third panel'
+                    layout : {
+                        type : 'vbox',
+                        align : 'stretch'
+                    },
+                    items : [{
+                        id : 'gameslist',
+                        flex : 1,
+                        bodyCls : 'x-window-body-default',
+                        html : 'Games list'
+                    }, {
+                        bodyCls : 'x-window-body-default',
+                        layout : {
+                            type : 'hbox',
+                            align : 'stretch',
+                            pack : 'center'
+                        },
+                        items : [{
+                            xtype : 'button',
+                            text : 'Create new game'
+                        }]
+                    }]
                 }]//custom items
             });
+            var updateClock = function () {
+                Ext.fly('clock').update(new Date().format('g:i:s A'));
+            }
+
+            this.runner = new Ext.util.TaskRunner();
+            this.task = this.runner.newTask({
+                run: this.updateInformation,
+                interval: 1000
+            });
+            win.on('show', this.onShow, this);
+            win.on('hide', this.onHide, this);
             //custom after window create logic
         }
         return win;
+    },
+    
+    onShow : function () {
+        alert('Start polling... + set: User is online and active');
+        this.task.start();
+    },
+    
+    onHide : function () {
+        alert('Stop polling! + set: User is online but inactive');
+        this.task.stop();
+    },
+    
+    updateInformation : function () {
+        Ext.Ajax.request({
+            url: 'update.php',
+            params: {
+               user : window.userid
+            },
+            success: Ext.bind(function(response) {
+                var text = response.responseText;
+                try {
+                    var result = Ext.decode(text);
+                    Ext.getCmp('chatlines').update(result.chatlines);
+                    Ext.getCmp('usersonline').update(result.usersonline);
+                    Ext.getCmp('gameslist').update(result.currentgames);
+                }
+                catch (e) {
+                    alert((window.alertmessage1 || 'Error during decoding text:') + '\n' + text);
+                }
+            })
+        });
     }
 });

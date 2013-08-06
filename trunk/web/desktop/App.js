@@ -221,6 +221,7 @@ Ext.define('MyDesktop.App', {
         Ext.Msg.buttonText.yes = window.yes || 'Так';
         Ext.Msg.buttonText.no = window.no || 'Ні';
         this.getModules()[0].createWindow().show();
+        Ext.EventManager.on(window, 'beforeunload', this.beforeUnload, this);
     },
     
     loadStickers : function (url, hashtag, defX, defYShift, bodyStyle, options) {
@@ -282,8 +283,17 @@ Ext.define('MyDesktop.App', {
             },
             success: Ext.bind(function(response){
                 myDesktopApp.shutdown();
+                window.userLogged = false;
+                alert('Stop polling! + set: User is offline');
                 loginForm.show();
             })
         });
+    },
+    
+    beforeUnload : function () {
+        Ext.EventManager.un(window, 'beforeunload', this.beforeUnload, this);
+        debugger;
+        this.write('Stop polling! + set: User is offline')
+        alert('Stop polling! + set: User is offline');
     }
 });
