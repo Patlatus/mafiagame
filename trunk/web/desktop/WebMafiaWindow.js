@@ -2,6 +2,7 @@ Ext.define('MyDesktop.WebMafiaWindow', {
     extend: 'Ext.ux.desktop.Module',
     
     requires: [
+        MyDesktop.User
     ],
     
     id    : 'mafia-win',
@@ -104,7 +105,7 @@ Ext.define('MyDesktop.WebMafiaWindow', {
             this.runner = new Ext.util.TaskRunner();
             this.task = this.runner.newTask({
                 run: this.updateInformation,
-                interval: 1000
+                interval: 10000//1000
             });
             win.on('show', this.onShow, this);
             win.on('hide', this.onHide, this);
@@ -114,11 +115,13 @@ Ext.define('MyDesktop.WebMafiaWindow', {
     },
     
     onShow : function () {
+        MyDesktop.User.setOnline();
         alert('Start polling... + set: User is online and active');
         this.task.start();
     },
     
     onHide : function () {
+        MyDesktop.User.setAway();
         alert('Stop polling! + set: User is online but inactive');
         this.task.stop();
     },
