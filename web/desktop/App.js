@@ -14,6 +14,7 @@ Ext.define('MyDesktop.App', {
         'MyDesktop.SimpleReader',
         'MyDesktop.RegistrationForm',
         'MyDesktop.LoginForm',
+        'MyDesktop.User',
         'MyDesktop.Settings',
         'MyDesktop.WebMafiaWindow'],
     getModules : function(){
@@ -284,7 +285,7 @@ Ext.define('MyDesktop.App', {
             success: Ext.bind(function(response){
                 myDesktopApp.shutdown();
                 window.userLogged = false;
-                alert('Stop polling! + set: User is offline');
+                MyDesktop.User.setOffline();
                 loginForm.show();
             })
         });
@@ -292,8 +293,8 @@ Ext.define('MyDesktop.App', {
     
     beforeUnload : function () {
         Ext.EventManager.un(window, 'beforeunload', this.beforeUnload, this);
-        debugger;
-        this.write('Stop polling! + set: User is offline')
-        alert('Stop polling! + set: User is offline');
+        if (window.userLogged) {
+            MyDesktop.User.setOffline();
+        }
     }
 });
