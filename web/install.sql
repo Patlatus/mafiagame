@@ -40,11 +40,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(50) DEFAULT NULL,
   `signup_date` int(10) DEFAULT NULL,
   `language` tinytext,
+  `status` tinyint(4) DEFAULT NULL,
+  `last_activity` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+
+
 
 # Dumping data for table plans.users: ~11 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
@@ -64,3 +68,38 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `signup_date`, `lang
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+
+
+DROP TABLE IF EXISTS `auditlog`;
+CREATE TABLE `auditlog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userid` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `event` tinytext,
+  `time` int(10) DEFAULT NULL,
+  `language` tinytext,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `failedlogins`;
+CREATE TABLE `failedlogins` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL,
+  `password` varchar(45) DEFAULT NULL,
+  `time` int(10) DEFAULT NULL,
+  `language` tinytext,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `failedsignups`;
+CREATE TABLE `failedsignups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL,
+  `password` varchar(50) DEFAULT NULL,
+  `passver` varchar(50) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `time` int(10) DEFAULT NULL,
+  `language` tinytext,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
