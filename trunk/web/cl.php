@@ -1,5 +1,8 @@
 <?php
     include('initcfg.php');
+    if (!isset($_SESSION['userid'])) {
+        $_SESSION['userid'] = -1;
+    }
     auditEvent($log, $_SESSION['userid'], $_SESSION['username'], "open", $_SESSION['language']);
     if (isset($_SESSION['username'])) {
         $log->lwrite('Session user is logged.');
@@ -25,7 +28,7 @@
                 echo '{success:false,message:"You are not logged."}';
             }
         } else {
-            auditEvent($log, $_SESSION['userid'], $_SESSION['username'], "failed login", $_SESSION['language']);
+            auditEvent($log, $_SESSION['userid'], $_SESSION['username'], "no login", $_SESSION['language']);
             echo '{success:false,message:"You are not logged."}';
         }
     }

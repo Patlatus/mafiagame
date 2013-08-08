@@ -31,7 +31,7 @@ function updateUser($lg, $status) {
 };
 
 function auditEvent($lg, $userid, $username, $event, $language) {
-    $sql = "insert into audit(userid, username, event, time, language) values (".$userid.', "'.$username.'", "'.$event.'", '.time().', "'.$language.'")';
+    $sql = "insert into auditlog(userid, username, event, time, language) values (".$userid.', "'.$username.'", "'.$event.'", '.time().', "'.$language.'")';
     $lg->lwrite('sql='.$sql);
     if (mysql_query($sql)) {
         $lg->lwrite('Sql, success:true');
@@ -41,7 +41,7 @@ function auditEvent($lg, $userid, $username, $event, $language) {
 };
 
 function auditFailedLogin($lg, $username, $password, $language) {
-    $sql = "insert into failedlogins(username, password, time, language) values ('".$username."', '".$password."'".time().', "'.$language.'")';
+    $sql = "insert into failedlogins(name, password, time, language) values ('".$username."', '".$password."',".time().', "'.$language.'")';
     $lg->lwrite('sql='.$sql);
     if (mysql_query($sql)) {
         $lg->lwrite('Sql, success:true');
@@ -51,7 +51,7 @@ function auditFailedLogin($lg, $username, $password, $language) {
 }
 
 function auditFailedSignup($lg, $username, $password, $passver, $email, $language) {
-    $sql = "insert into failedsignups(username, password, passver, email, time, language) values ('".$username."', '".$password."', '".$passver."', '".$email."'".time().', "'.$language.'")';
+    $sql = "insert into failedsignups(name, password, passver, email, time, language) values ('".$username."', '".$password."', '".$passver."', '".$email."',".time().', "'.$language.'")';
     $lg->lwrite('sql='.$sql);
     if (mysql_query($sql)) {
         $lg->lwrite('Sql, success:true');
