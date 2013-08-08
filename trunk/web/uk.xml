@@ -25,6 +25,7 @@
 <usernamealreadyused>Інший користувач вже використовує таке ім'я користувача.</usernamealreadyused>
 <invalidemail>Невалідний імейл.</invalidemail>
 <passwordsarenotidentical>Паролі не співпадають.</passwordsarenotidentical>
+<emptyusernameorpassword>Порожнє поле імені користувача чи паролю</emptyusernameorpassword>
 <settings>Налаштування</settings>
 <changesettings>Змінити налаштування</changesettings>
 <addnote>Додати запис</addnote>
