@@ -25,6 +25,7 @@
 <usernamealreadyused>Another user already use this username.</usernamealreadyused>
 <invalidemail>The email you typed is not valid.</invalidemail>
 <passwordsarenotidentical>The passwords you entered are not identical.</passwordsarenotidentical>
+<emptyusernameorpassword>Empty user name or password field</emptyusernameorpassword>
 <settings>Settings</settings>
 <changesettings>Change settings</changesettings>
 <addnote>Add note</addnote>

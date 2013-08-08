@@ -30,6 +30,36 @@ function updateUser($lg, $status) {
     updateLastActivity($lg);
 };
 
+function auditEvent($lg, $userid, $username, $event, $language) {
+    $sql = "insert into audit(userid, username, event, time, language) values (".$userid.', "'.$username.'", "'.$event.'", '.time().', "'.$language.'")';
+    $lg->lwrite('sql='.$sql);
+    if (mysql_query($sql)) {
+        $lg->lwrite('Sql, success:true');
+    } else {
+        $lg->lwrite('Sql has failed: '.$sql);
+    }
+};
+
+function auditFailedLogin($lg, $username, $password, $language) {
+    $sql = "insert into failedlogins(username, password, time, language) values ('".$username."', '".$password."'".time().', "'.$language.'")';
+    $lg->lwrite('sql='.$sql);
+    if (mysql_query($sql)) {
+        $lg->lwrite('Sql, success:true');
+    } else {
+        $lg->lwrite('Sql has failed: '.$sql);
+    }
+}
+
+function auditFailedSignup($lg, $username, $password, $passver, $email, $language) {
+    $sql = "insert into failedsignups(username, password, passver, email, time, language) values ('".$username."', '".$password."', '".$passver."', '".$email."'".time().', "'.$language.'")';
+    $lg->lwrite('sql='.$sql);
+    if (mysql_query($sql)) {
+        $lg->lwrite('Sql, success:true');
+    } else {
+        $lg->lwrite('Sql has failed: '.$sql);
+    }
+}
+
 $con = mysql_connect($dbhost, $dblogin, $dbpass);
     if (!$con)
       {
