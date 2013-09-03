@@ -105,7 +105,7 @@ Ext.define('MyDesktop.WebMafiaWindow', {
             this.runner = new Ext.util.TaskRunner();
             this.task = this.runner.newTask({
                 run: this.updateInformation,
-                interval: 10000//1000
+                interval: 1000
             });
             win.on('show', this.onShow, this);
             win.on('hide', this.onHide, this);
@@ -137,7 +137,18 @@ Ext.define('MyDesktop.WebMafiaWindow', {
                 try {
                     var result = Ext.decode(text);
                     Ext.getCmp('chatlines').update(result.chatlines);
-                    Ext.getCmp('usersonline').update(result.usersonline);
+                    try {
+                        var users = Ext.decode(result.usersonline),
+                            a = ['<table>'];
+                        for (var i = 0; i < users.length; i++) {
+                            a = a.concat(['<tr><td><img src="desktop/images', ((users[i].status == 1) ? '/online.png' : '/away.png'), '"></td><td><b>', users[i].name, '</b></td></tr>']);
+                        }
+                        a.push('</table>');
+                        Ext.getCmp('usersonline').update(a.join(''));
+                    }
+                    catch (e) {
+                        alert((window.alertmessage2 || 'Error during decoding userlist:') + '\n' + result.usersonline);
+                    }
                     Ext.getCmp('gameslist').update(result.currentgames);
                 }
                 catch (e) {
