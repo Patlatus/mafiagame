@@ -103,3 +103,38 @@ CREATE TABLE `failedsignups` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `baselinechatlines`;
+CREATE  TABLE `baselinechatlines` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `userid` INT NULL ,
+  `username` VARCHAR(50) NULL ,
+  `text` VARCHAR(50) NULL ,
+  `time` INT(10) NULL ,
+   PRIMARY KEY (`id`)
+);
+
+DROP TABLE IF EXISTS `chatlines`;
+CREATE  TABLE `chatlines` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `gameid` INT NULL ,
+  `userid` INT NULL ,
+  `username` VARCHAR(50) NULL ,
+  `text` VARCHAR(50) NULL ,
+  `groupid` INT NULL ,
+  `time` INT(10) NULL ,
+  PRIMARY KEY (`id`)
+);
+
+DROP TABLE IF EXISTS `pms`;
+CREATE  TABLE `pms` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `fromuserid` INT NULL ,
+  `touserid` INT NULL ,
+  `text` VARCHAR(50) NULL ,
+  `time` INT(10) NULL ,
+  PRIMARY KEY (`id`)
+);
+
+
+
+
