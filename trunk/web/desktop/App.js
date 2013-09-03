@@ -221,7 +221,8 @@ Ext.define('MyDesktop.App', {
         this.callParent(arguments);
         Ext.Msg.buttonText.yes = window.yes || 'Так';
         Ext.Msg.buttonText.no = window.no || 'Ні';
-        this.getModules()[0].createWindow().show();
+        this.webMafia = this.getModules()[0];
+        this.webMafia.createWindow().show();
         Ext.EventManager.on(window, 'beforeunload', this.beforeUnload, this);
     },
     
@@ -277,6 +278,8 @@ Ext.define('MyDesktop.App', {
     },
     
     onLogout : function () {
+        MyDesktop.User.setOffline();
+        myDesktopApp.webMafia.task.stop();
         Ext.Ajax.request({
             url: 'lo.php',
             params: {
@@ -285,7 +288,6 @@ Ext.define('MyDesktop.App', {
             success: Ext.bind(function(response){
                 myDesktopApp.shutdown();
                 window.userLogged = false;
-                MyDesktop.User.setOffline();
                 loginForm.show();
             })
         });
