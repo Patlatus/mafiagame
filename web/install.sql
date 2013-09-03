@@ -108,7 +108,7 @@ CREATE  TABLE `baselinechatlines` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `userid` INT NULL ,
   `username` VARCHAR(50) NULL ,
-  `text` VARCHAR(50) NULL ,
+  `text` text,
   `time` INT(10) NULL ,
    PRIMARY KEY (`id`)
 );
@@ -119,7 +119,7 @@ CREATE  TABLE `chatlines` (
   `gameid` INT NULL ,
   `userid` INT NULL ,
   `username` VARCHAR(50) NULL ,
-  `text` VARCHAR(50) NULL ,
+  `text` text,
   `groupid` INT NULL ,
   `time` INT(10) NULL ,
   PRIMARY KEY (`id`)
@@ -130,7 +130,7 @@ CREATE  TABLE `pms` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `fromuserid` INT NULL ,
   `touserid` INT NULL ,
-  `text` VARCHAR(50) NULL ,
+  `text` text,
   `time` INT(10) NULL ,
   PRIMARY KEY (`id`)
 );

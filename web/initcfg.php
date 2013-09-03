@@ -20,6 +20,7 @@ function updateLastActivity($lg) {
 };
 
 function updateUser($lg, $status) {
+    updateLastActivity($lg);
     $sql = 'update users set status = '.$status.' where id = '.$_SESSION['userid'];
     $lg->lwrite('sql='.$sql);
     if (mysql_query($sql)) {
@@ -27,7 +28,6 @@ function updateUser($lg, $status) {
     } else {
         $lg->lwrite('Sql has failed: '.$sql);
     }
-    updateLastActivity($lg);
 };
 
 function auditEvent($lg, $userid, $username, $event, $language) {
