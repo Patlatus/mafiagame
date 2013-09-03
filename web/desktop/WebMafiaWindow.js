@@ -124,9 +124,12 @@ Ext.define('MyDesktop.WebMafiaWindow', {
     },
     
     onHide : function () {
+        if (!window.userLogged) {
+            return;
+        }
         MyDesktop.User.setAway();
-        alert('Stop polling! + set: User is online but inactive');
         this.task.stop();
+        alert('Stop polling! + set: User is online but inactive');
     },
     
     onSay : function () {
