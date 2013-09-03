@@ -50,6 +50,7 @@ Ext.define('MyDesktop.WebMafiaWindow', {
                         flex : 1,
                         id : 'chatlines',
                         bodyCls : 'x-window-body-default',
+                        style : 'overflow:auto',
                         html : 'Chat lines'
                     }, {
                         bodyCls : 'x-window-body-default',
@@ -59,10 +60,12 @@ Ext.define('MyDesktop.WebMafiaWindow', {
                         },
                         items : [{
                             flex : 1,
+                            id : 'txt',
                             xtype : 'textfield'
                         }, {
                             xtype : 'button',
-                            text : 'Say'
+                            text : 'Say',
+                            handler : this.onSay
                         }]
                     }]
                 }, {
@@ -105,7 +108,7 @@ Ext.define('MyDesktop.WebMafiaWindow', {
             this.runner = new Ext.util.TaskRunner();
             this.task = this.runner.newTask({
                 run: this.updateInformation,
-                interval: 1000
+                interval: 2500
             });
             win.on('show', this.onShow, this);
             win.on('hide', this.onHide, this);
@@ -126,6 +129,20 @@ Ext.define('MyDesktop.WebMafiaWindow', {
         this.task.stop();
     },
     
+    onSay : function () {
+        Ext.Ajax.request({
+            url: 'abcl.php',
+            params: {
+                user : window.userid,
+                username : window.username,
+                text : Ext.getCmp('txt').getValue()
+            },
+            success: Ext.bind(function(response) {
+                Ext.getCmp('txt').setValue('');
+            })
+        });
+    },
+    
     updateInformation : function () {
         Ext.Ajax.request({
             url: 'update.php',
@@ -136,12 +153,23 @@ Ext.define('MyDesktop.WebMafiaWindow', {
                 var text = response.responseText;
                 try {
                     var result = Ext.decode(text);
-                    Ext.getCmp('chatlines').update(result.chatlines);
+                    try {
+                        var chatlines = Ext.decode(result.chatlines),
+                            a = ['<div>'];
+                        for (var i = 0; i < chatlines.length; i++) {
+                            a = a.concat(['<div><span><b>', chatlines[i].username, '</b></span>&nbsp;<span>', chatlines[i].text, '</span></div>']);
+                        }
+                        a.push('</div>');
+                        Ext.getCmp('chatlines').update(a.join(''));
+                    }
+                    catch (e) {
+                        alert((window.alertmessage2 || 'Error during decoding userlist:') + '\n' + result.usersonline);
+                    }
                     try {
                         var users = Ext.decode(result.usersonline),
                             a = ['<table>'];
                         for (var i = 0; i < users.length; i++) {
-                            a = a.concat(['<tr><td><img src="desktop/images', ((users[i].status == 1) ? '/online.png' : '/away.png'), '"></td><td><b>', users[i].name, '</b></td></tr>']);
+                            a = a.concat(['<tr><td><img src="desktop/images', ((users[i].status == 1) ? '/online.png' : '/away.png'), '"></td><td>&nbsp;</td><td><b>', users[i].name, '</b></td></tr>']);
                         }
                         a.push('</table>');
                         Ext.getCmp('usersonline').update(a.join(''));

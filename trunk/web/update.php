@@ -22,8 +22,7 @@
     $log->lwrite('sql='.$sql);
     $result = mysql_query($sql);
     $log->lwrite("$result = ".$result);
-    echo '{chatlines:"my awesome chatlines...",usersonline:"';
-    echo "[";
+    echo '{usersonline:"[';
     if ($row = mysql_fetch_array($result)) {
         $log->lwrite("if ");
         echo "{status:'" . $row['status'] . "',name:'" . $row['username'] . "'}";
@@ -32,6 +31,23 @@
         $log->lwrite("while ");
         echo ",{status:'" . $row['status'] . "',name:'" . $row['username'] . "'}";
     }
-    echo "]";
-    echo '",currentgames:"Current games....."}'
+    echo ']",';
+    
+    $t = time() - 3600;
+    $sql = 'select * from '.$bcl.' WHERE time > '.$t;
+    $log->lwrite('sql='.$sql);
+    $result = mysql_query($sql);
+    $log->lwrite("$result = ".$result);
+    
+    echo 'chatlines:"[';
+    if ($row = mysql_fetch_array($result)) {
+        $log->lwrite("if ");
+        echo "{userid:'" . $row['userid'] . "',text:'" . $row['text']. "',username:'" . $row['username']. "',time:'" . $row['time']  . "'}";
+    }
+    while ($row = mysql_fetch_array($result)) {
+        $log->lwrite("while ");
+        echo ",{userid:'" . $row['userid'] . "',text:'" . $row['text']. "',username:'" . $row['username']. "',time:'" . $row['time'] . "'}";
+    }
+    echo ']"';
+    echo ',currentgames:"Current games....."}'
 ?>
