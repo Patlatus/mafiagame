@@ -1,0 +1,6 @@
+game status 
+
+* on record
+* started
+* ended
+* cancelled

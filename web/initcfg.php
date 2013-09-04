@@ -60,6 +60,17 @@ function auditFailedSignup($lg, $username, $password, $passver, $email, $languag
     }
 }
 
+function updateGame($lg, $pg, $gameid, $status) {
+    $lg->lwrite('pg='.$pg);
+    $sql = 'update '.$pg.' set status = "'.$status.'" where id = '.$gameid;
+    $lg->lwrite('sql='.$sql);
+    if (mysql_query($sql)) {
+        $lg->lwrite('Sql, success:true');
+    } else {
+        $lg->lwrite('Sql has failed: '.$sql);
+    }
+};
+
 $con = mysql_connect($dbhost, $dblogin, $dbpass);
     if (!$con)
       {

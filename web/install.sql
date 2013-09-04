@@ -135,6 +135,25 @@ CREATE  TABLE `pms` (
   PRIMARY KEY (`id`)
 );
 
+DROP TABLE IF EXISTS `predefinedgames`;
+CREATE  TABLE `predefinedgames` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `userid` INT NULL ,
+  `username` VARCHAR(50) NULL ,
+  `gameid` INT NOT NULL ,
+  `time` INT(10) NULL ,
+  `status` tinytext,
+   PRIMARY KEY (`id`)
+);
 
+DROP TABLE IF EXISTS `players`;
+CREATE  TABLE `players` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `userid` INT NULL ,
+  `username` VARCHAR(50) NULL ,
+  `gameid` INT NOT NULL ,
+  `time` INT(10) NULL ,
+   PRIMARY KEY (`id`)
+);
 
 
