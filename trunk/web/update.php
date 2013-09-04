@@ -49,5 +49,21 @@
         echo ",{userid:'" . $row['userid'] . "',text:'" . $row['text']. "',username:'" . $row['username']. "',time:'" . $row['time'] . "'}";
     }
     echo ']"';
-    echo ',currentgames:"Current games....."}'
+    
+    $t = time() - 3600;
+    $sql = 'select * from '.$pg.' WHERE status = "on record" and time > '.$t;
+    $log->lwrite('sql='.$sql);
+    $result = mysql_query($sql);
+    $log->lwrite("$result = ".$result);
+    
+    echo ',currentgames:"[';
+    if ($row = mysql_fetch_array($result)) {
+        $log->lwrite("if ");
+        echo "{userid:'" . $row['userid'] . "',gameid:'" . $row['gameid']. "',username:'" . $row['username']. "',time:'" . $row['time']  . "'}";
+    }
+    while ($row = mysql_fetch_array($result)) {
+        $log->lwrite("while ");
+        echo ",{userid:'" . $row['userid'] . "',gameid:'" . $row['gameid']. "',username:'" . $row['username']. "',time:'" . $row['time'] . "'}";
+    }
+    echo ']"}';
 ?>

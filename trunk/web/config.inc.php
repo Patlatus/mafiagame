@@ -6,4 +6,6 @@ $dbname = "plans";
 $plans = "plans";
 $users = "users";
 $bcl = "baselinechatlines";
+$pg = "predefinedgames";
+$pl = "players";
 ?>
