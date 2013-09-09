@@ -17,11 +17,19 @@ Ext.define('MyDesktop.WebMafiaWindow', {
         };
     },
     
+    getGameNameById : function (gameId) {
+        return this.gamesStore.findRecord('code', gameId).get('name')
+    },
+    
     createWindow : function() {
         var t       = this,
             desktop = myDesktopApp.getDesktop();
             win     = desktop.getWindow(t.id);
         if (!win) {
+            this.gamesStore = Ext.create('Ext.data.Store', {
+                fields:['code', 'name'],
+                data : [{'code':0,'name':'6 standard'}]
+            });
             win = desktop.createWindow({
                 id : t.id,
                 title : t.title,
@@ -109,6 +117,7 @@ Ext.define('MyDesktop.WebMafiaWindow', {
             this.runner = new Ext.util.TaskRunner();
             this.task = this.runner.newTask({
                 run: this.updateInformation,
+                scope : this,
                 interval: 2500
             });
             win.on('show', this.onShow, this);
@@ -194,10 +203,7 @@ Ext.define('MyDesktop.WebMafiaWindow', {
                             id: 'predefinedgame',
                             name: 'predefinedgame',
                             xtype: 'combo',
-                            store: {
-                                fields:['code', 'name'],
-                                data : [{'code':0,'name':'6 standard'}]
-                            },
+                            store: this.gamesStore,
                             displayField: 'name',
                             valueField: 'code',
                             queryMode: 'local',
@@ -441,12 +447,65 @@ Ext.define('MyDesktop.WebMafiaWindow', {
                     catch (e) {
                         alert((window.alertmessage2 || 'Error during decoding userlist:') + '\n' + result.usersonline);
                     }
-                    Ext.getCmp('gameslist').update(result.currentgames);
+                    
+                    try {
+                    
+                        var gameslist        = Ext.decode(result.currentgames),
+                            items            = [],
+                            a                = [],
+                            gamespanelparent = Ext.getCmp('gameslist'),
+                            gamespanel,
+                            i;
+                        
+                        
+                            
+                        for (i = 0; i < gameslist.length; i++) {
+                            a = ['<div><span><b>', gameslist[i].username, '</b></span>&nbsp;<span>', this.getGameNameById(gameslist[i].gameid), '</span><span><i>', gameslist[i].PlayersCount, '/6</i></span>'+
+                            
+                            
+                            '</div>'];
+                            
+                            
+                            
+                            
+                            items.push({
+                                xtype:'panel',
+                                layout:'hbox',
+                                bodyCls : 'x-window-body-default',
+                                border: false,
+                                items: [{
+                                    bodyCls : 'x-window-body-default',
+                                    border: false,
+                                    html : a.join('')
+                                }, {
+                                    xtype: 'button',
+                                    text : 'Join'
+                                }]
+                            })
+                        };
+                        
+                        gamespanelparent.items.clear();
+                        gamespanelparent.update('');
+                        gamespanel = Ext.create('Ext.panel.Panel', {
+                            layout : 'vbox',
+                            bodyCls : 'x-window-body-default',
+                            border: false,
+                            items : items
+                        });
+                        
+                        
+                        gamespanelparent.add(gamespanel);
+                    }
+                    catch (e) {
+                        alert(('Error during decoding gameslist:') + '\n' + result.usersonline);
+                    }
+                    
+                    
                 }
                 catch (e) {
                     alert((window.alertmessage1 || 'Error during decoding text:') + '\n' + text);
                 }
-            })
+            }, this)
         });
     }
 });

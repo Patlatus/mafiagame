@@ -50,20 +50,20 @@
     }
     echo ']"';
     
-    $t = time() - 3600;
-    $sql = 'select * from '.$pg.' WHERE status = "on record" and time > '.$t;
+    $t = time() - 3600000;
+    $sql = 'select '.$pg.'.*, count('.$pl.'.id) as PlayersCount from '.$pg.' left join '.$pl.' on '.$pl.'.gameid = '.$pg.'.id WHERE status = "on record" and '.$pg.'.time > '.$t.' GROUP BY id';
     $log->lwrite('sql='.$sql);
     $result = mysql_query($sql);
-    $log->lwrite("$result = ".$result);
+    $log->lwrite("result = ".$result);
     
     echo ',currentgames:"[';
     if ($row = mysql_fetch_array($result)) {
         $log->lwrite("if ");
-        echo "{userid:'" . $row['userid'] . "',gameid:'" . $row['gameid']. "',username:'" . $row['username']. "',time:'" . $row['time']  . "'}";
+        echo "{userid:'" . $row['userid'] . "',gameid:'" . $row['gameid']. "',username:'" . $row['username']. "',time:'" . $row['time'] . "',PlayersCount:'" . $row['PlayersCount']  . "'}";
     }
     while ($row = mysql_fetch_array($result)) {
         $log->lwrite("while ");
-        echo ",{userid:'" . $row['userid'] . "',gameid:'" . $row['gameid']. "',username:'" . $row['username']. "',time:'" . $row['time'] . "'}";
+        echo ",{userid:'" . $row['userid'] . "',gameid:'" . $row['gameid']. "',username:'" . $row['username']. "',time:'" . $row['time'] . "',PlayersCount:'" . $row['PlayersCount'] . "'}";
     }
     echo ']"}';
 ?>
