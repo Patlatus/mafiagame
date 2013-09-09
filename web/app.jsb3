@@ -1045,6 +1045,21 @@
                     "path": "desktop/"
                 },
                 {
+                    "clsName": "MyDesktop.SelectGameOptionsPanel",
+                    "name": "SelectGameOptionsPanel.js",
+                    "path": "desktop/"
+                },
+                {
+                    "clsName": "MyDesktop.WaitForOtherPlayersPanel",
+                    "name": "WaitForOtherPlayersPanel.js",
+                    "path": "desktop/"
+                },
+                {
+                    "clsName": "MyDesktop.User",
+                    "name": "User.js",
+                    "path": "desktop/"
+                },
+                {
                     "clsName": "MyDesktop.WebMafiaWindow",
                     "name": "WebMafiaWindow.js",
                     "path": "desktop/"
