@@ -3,7 +3,8 @@ Ext.define('MyDesktop.WebMafiaWindow', {
     
     requires: [
         MyDesktop.User,
-        MyDesktop.SelectGameOptionsPanel
+        MyDesktop.SelectGameOptionsPanel,
+        MyDesktop.WaitForOtherPlayersPanel
     ],
     
     id    : 'mafia-win',
@@ -93,12 +94,38 @@ Ext.define('MyDesktop.WebMafiaWindow', {
                     items : [{
                         flex : 1,
                         bodyCls : 'x-window-body-default',
+                        layout : {
+                            type : 'hbox',
+                            align : 'stretch'
+                        },
                         items : [{
-                            id : 'gameslist',
+                            id : 'gameslistparent',
                             flex : 1,
-                            bodyCls : 'x-window-body-default',
-                            border : false,
-                            html : 'Games: Loading...'
+                            layout : {
+                                type : 'vbox',
+                                align : 'stretch'
+                            },
+                            items : [{
+                                id : 'gameslist',
+                                flex : 1,
+                                bodyCls : 'x-window-body-default',
+                                border : false,
+                                html : 'Games: Loading...'
+
+                            }, {
+                                bodyCls : 'x-window-body-default',
+                                layout : {
+                                    type : 'hbox',
+                                    align : 'stretch',
+                                    pack : 'center'
+                                },
+                                items : [{
+                                    xtype : 'button',
+                                    text : 'Create new game',
+                                    scope : this,
+                                    handler : this.onCreateNewGame
+                                }]
+                            }]
                         }, Ext.create('MyDesktop.SelectGameOptionsPanel', {
                             hidden : true,
                             id : 'creategame',
@@ -107,20 +134,15 @@ Ext.define('MyDesktop.WebMafiaWindow', {
                             gamesStore: this.gamesStore,
                             onOptionsSelect: Ext.bind(this.onOptionsSelect, this),
                             onOptionsSelectCancel: Ext.bind( this.onOptionsSelectCancel, this)
+                        }), Ext.create('MyDesktop.WaitForOtherPlayersPanel', {
+                            hidden : true,
+                            id : 'waitforotherplayers',
+                            flex : 1,
+                            border : false,
+                            onGameStart : Ext.bind(this.onGameStart, this),
+                            onGameStartBots : Ext.bind(this.onGameStartBots, this),
+                            onGameStartCancel : Ext.bind(this.onGameStartCancel, this)
                         })]
-                    }, {
-                        bodyCls : 'x-window-body-default',
-                        layout : {
-                            type : 'hbox',
-                            align : 'stretch',
-                            pack : 'center'
-                        },
-                        items : [{
-                            xtype : 'button',
-                            text : 'Create new game',
-                            scope : this,
-                            handler : this.onCreateNewGame
-                        }]
                     }]
                 }]
             });
@@ -170,34 +192,8 @@ Ext.define('MyDesktop.WebMafiaWindow', {
     },
     
     onCreateNewGame : function () {
-        Ext.getCmp('gameslist').hide();
-        Ext.getCmp('creategame').show();/*
-        var desktop = myDesktopApp.getDesktop(),
-            cg      = 'creategame',
-            win     = desktop.getWindow(cg),
-            parentw = desktop.getWindow(this.id);
-        parentw.minimize();
-        if (!win) {
-            win = desktop.createWindow({
-                id : cg,
-                title : 'create new game',
-                width : 425,
-                maximized : true,
-                minWidth : 330,
-                height : 330,
-                minHeight : 330,
-                //iconCls : t.icon,
-                animCollapse : false,
-                constrainHeader : true,
-                
-                items : [Ext.create('MyDesktop.SelectGameOptionsPanel', {
-                    gamesStore: this.gamesStore,
-                    onOptionsSelect: Ext.bind(this.onOptionsSelect, this),
-                    onOptionsSelectCancel: Ext.bind( this.onOptionsSelectCancel, this)
-                })]    
-            });
-        };
-        win.show();*/
+        Ext.getCmp('gameslistparent').hide();
+        Ext.getCmp('creategame').show();
     },
     
     onOptionsSelect : function () {
@@ -214,69 +210,10 @@ Ext.define('MyDesktop.WebMafiaWindow', {
             },
             success: Ext.bind(function(response) {
                 window.gameid = response.responseText;
-                var desktop = myDesktopApp.getDesktop(),
-                    cg      = 'creategame',
-                    win     = desktop.getWindow(cg),
-                    wp      = 'waitforotherplayers',
-                    owin     = desktop.getWindow(wp);
-                //Ext.getCmp('gameslist').hide();
+                
                 Ext.getCmp('creategame').hide();
-                if (!owin) {
-                    owin = desktop.createWindow({
-                        id : wp,
-                        title : 'Wait for other participants players',
-                        width : 425,
-                        maximized : true,
-                        minWidth : 330,
-                        height : 330,
-                        minHeight : 330,
-                        //iconCls : t.icon,
-                        animCollapse : false,
-                        constrainHeader : true,
-                        layout : {
-                            type : 'hbox',
-                            align : 'stretch'
-                        },
-                        items : [{
-                            //title : '---',
-                            bodyCls : 'x-window-body-default',
-                            flex : 2,
-                            layout : {
-                                type : 'vbox',
-                                align : 'stretch'
-                            },
-                            items : [{
-                                title : 'Players',
-                                bodyCls : 'x-window-body-default',
-                                id : 'players',
-                                flex : 1,
-                                html : 'players list'
-                            }, {
-                                bodyCls : 'x-window-body-default',
-                                layout : {
-                                    type : 'hbox',
-                                    align : 'stretch'
-                                },
-                                items : [{
-                                    xtype : 'button',
-                                    text : 'Start',
-                                    disabled : true,
-                                    handler : this.onGameStart
-                                }, {
-                                    xtype : 'button',
-                                    text : 'Start prematurely using bot players',
-                                    handler : this.onGameStartBots
-                                }, {
-                                    xtype : 'button',
-                                    text : 'Cancel',
-                                    scope : this,
-                                    handler : this.onGameStartCancel
-                                }]
-                            }]
-                        }]    
-                    });
-                };
-                owin.show();
+                Ext.getCmp('waitforotherplayers').show();
+            
                 
                 
                 
@@ -285,13 +222,10 @@ Ext.define('MyDesktop.WebMafiaWindow', {
     },
     
     onOptionsSelectCancel : function () {
-        var desktop = myDesktopApp.getDesktop(),
-            //cg      = 'creategame',
-            //win     = desktop.getWindow(cg),
-            parentw = desktop.getWindow(this.id);
-        Ext.getCmp('creategame').hide();//win.close();
-        parentw.show();
-        Ext.getCmp('gameslist').show();
+        
+        Ext.getCmp('creategame').hide();
+        
+        Ext.getCmp('gameslistparent').show();
     },
 
     onGameStart : function () {
@@ -334,13 +268,8 @@ Ext.define('MyDesktop.WebMafiaWindow', {
                 status : 'cancelled'
             }
         });
-        var desktop = myDesktopApp.getDesktop(),
-            cg      = 'waitforotherplayers',
-            win     = desktop.getWindow(cg),
-            parentw = desktop.getWindow(this.id);
-        win.close();
-        parentw.show();
-        Ext.getCmp('gameslist').show();
+        Ext.getCmp('waitforotherplayers').hide();
+        Ext.getCmp('gameslistparent').show();
     },
     
     updateInformation : function () {
