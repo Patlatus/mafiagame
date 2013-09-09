@@ -4,6 +4,7 @@ Ext.define('MyDesktop.SelectGameOptionsPanel', {
     requires: [
         
     ],
+    
     initComponent : function () {
         this.layout = {
             type : 'hbox',
@@ -102,5 +103,4 @@ Ext.define('MyDesktop.SelectGameOptionsPanel', {
         }]
         this.callParent(arguments);
     }
-
 });
