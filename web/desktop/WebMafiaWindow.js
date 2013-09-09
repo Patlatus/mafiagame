@@ -2,7 +2,8 @@ Ext.define('MyDesktop.WebMafiaWindow', {
     extend: 'Ext.ux.desktop.Module',
     
     requires: [
-        MyDesktop.User
+        MyDesktop.User,
+        MyDesktop.SelectGameOptionsPanel
     ],
     
     id    : 'mafia-win',
@@ -90,10 +91,23 @@ Ext.define('MyDesktop.WebMafiaWindow', {
                         align : 'stretch'
                     },
                     items : [{
-                        id : 'gameslist',
                         flex : 1,
                         bodyCls : 'x-window-body-default',
-                        html : 'Games: Loading...'
+                        items : [{
+                            id : 'gameslist',
+                            flex : 1,
+                            bodyCls : 'x-window-body-default',
+                            border : false,
+                            html : 'Games: Loading...'
+                        }, Ext.create('MyDesktop.SelectGameOptionsPanel', {
+                            hidden : true,
+                            id : 'creategame',
+                            flex : 1,
+                            border : false,
+                            gamesStore: this.gamesStore,
+                            onOptionsSelect: Ext.bind(this.onOptionsSelect, this),
+                            onOptionsSelectCancel: Ext.bind( this.onOptionsSelectCancel, this)
+                        })]
                     }, {
                         bodyCls : 'x-window-body-default',
                         layout : {
@@ -156,6 +170,8 @@ Ext.define('MyDesktop.WebMafiaWindow', {
     },
     
     onCreateNewGame : function () {
+        Ext.getCmp('gameslist').hide();
+        Ext.getCmp('creategame').show();/*
         var desktop = myDesktopApp.getDesktop(),
             cg      = 'creategame',
             win     = desktop.getWindow(cg),
@@ -173,104 +189,15 @@ Ext.define('MyDesktop.WebMafiaWindow', {
                 //iconCls : t.icon,
                 animCollapse : false,
                 constrainHeader : true,
-                layout : {
-                    type : 'hbox',
-                    align : 'stretch'
-                },
-                items : [{
-                    title : 'Select game options',
-                    bodyCls : 'x-window-body-default',
-                    flex : 2,
-                    layout : {
-                        type : 'vbox',
-                        align : 'stretch'
-                    },
-                    items : [{
-                        bodyCls : 'x-window-body-default',
-                        layout : {
-                            type : 'vbox',
-                            align : 'stretch'
-                        },
-                        items : [{
-                            xtype : 'checkbox',
-                            name : 'custom',
-                            id : 'customgame',
-                            fieldLabel: 'Custom game',
-                            //boxLabel : 'Custom game',
-                            disabled : true
-                        }, {
-                            fieldLabel: 'predefined game',
-                            id: 'predefinedgame',
-                            name: 'predefinedgame',
-                            xtype: 'combo',
-                            store: this.gamesStore,
-                            displayField: 'name',
-                            valueField: 'code',
-                            queryMode: 'local',
-                            value : 0,
-                            forceSelection: true,
-                            allowBlank: false
-                        }]
-                    }, {
-                        bodyCls : 'x-window-body-default',
-                        layout : {
-                            type : 'hbox',
-                            align : 'stretch'
-                        },
-                        items : [{
-                            xtype : 'button',
-                            text : 'Create',
-                            scope : this,
-                            handler : this.onOptionsSelect
-                        }, {
-                            xtype : 'button',
-                            text : 'Cancel',
-                            scope : this,
-                            handler : this.onOptionsSelectCancel
-                        }]
-                    }]
-                }, {
-                    title : 'Options',
-                    disabled : true,
-                    bodyCls : 'x-window-body-default',
-                    flex : 3,
-                    layout : {
-                        type : 'vbox',
-                        align : 'stretch'
-                    },
-                    items : [{
-                        xtype: 'numberfield',
-                        //anchor: '100%',
-                        name: 'playerscount',
-                        fieldLabel: 'Number of players',
-                        value: 6,
-                        maxValue: 6,
-                        minValue: 0
-                    }, {
-                        xtype: 'numberfield',
-                        //anchor: '100%',
-                        name: 'mafiacount',
-                        fieldLabel: 'Number of mafia',
-                        value: 2,
-                        maxValue: 2,
-                        minValue: 0
-                    }, {
-                        xtype : 'checkbox',
-                        name : 'commissar',
-                        //boxLabel : 'Commissar present',
-                        fieldLabel: 'Commissar present',
-                        checked : true
-                    }, {
-                        xtype : 'checkbox',
-                        name : 'doctor',
-                        //boxLabel : 'Doctor present',
-                        fieldLabel: 'Doctor present',
-                        checked : true
-                    }]
-                }]    
+                
+                items : [Ext.create('MyDesktop.SelectGameOptionsPanel', {
+                    gamesStore: this.gamesStore,
+                    onOptionsSelect: Ext.bind(this.onOptionsSelect, this),
+                    onOptionsSelectCancel: Ext.bind( this.onOptionsSelectCancel, this)
+                })]    
             });
         };
-        win.show();
+        win.show();*/
     },
     
     onOptionsSelect : function () {
@@ -292,7 +219,8 @@ Ext.define('MyDesktop.WebMafiaWindow', {
                     win     = desktop.getWindow(cg),
                     wp      = 'waitforotherplayers',
                     owin     = desktop.getWindow(wp);
-                win.close();
+                //Ext.getCmp('gameslist').hide();
+                Ext.getCmp('creategame').hide();
                 if (!owin) {
                     owin = desktop.createWindow({
                         id : wp,
@@ -358,11 +286,12 @@ Ext.define('MyDesktop.WebMafiaWindow', {
     
     onOptionsSelectCancel : function () {
         var desktop = myDesktopApp.getDesktop(),
-            cg      = 'creategame',
-            win     = desktop.getWindow(cg),
+            //cg      = 'creategame',
+            //win     = desktop.getWindow(cg),
             parentw = desktop.getWindow(this.id);
-        win.close();
+        Ext.getCmp('creategame').hide();//win.close();
         parentw.show();
+        Ext.getCmp('gameslist').show();
     },
 
     onGameStart : function () {
@@ -411,6 +340,7 @@ Ext.define('MyDesktop.WebMafiaWindow', {
             parentw = desktop.getWindow(this.id);
         win.close();
         parentw.show();
+        Ext.getCmp('gameslist').show();
     },
     
     updateInformation : function () {
